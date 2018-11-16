@@ -82,6 +82,7 @@ public class PutDelPembeliActivity extends AppCompatActivity {
         btUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 MultipartBody.Part body = null;
                 //dicek apakah image sama dengan yang ada di server atau berubah
                 //jika sama dikirim lagi jika berbeda akan dikirim ke server
@@ -102,23 +103,23 @@ public class PutDelPembeliActivity extends AppCompatActivity {
                 RequestBody reqAction = MultipartBody.create(MediaType.parse("multipart/form-data"),"put");
 
                 Call<ResultPembeli> callUpdate = mApiInterface.putPembeli(body, reqIdPembeli, reqNama, reqAlamat, reqTelpn, reqAction);
+
                 callUpdate.enqueue(new Callback<ResultPembeli>() {
                     @Override
-                    public void onResponse(Call<ResultPembeli> call, Response<ResultPembeli>
-                            response) {
-                        //Log.d("Update Retrofit ", response.body().getStatus());
-                        if (response.body().getStatus().equals("failed")){
-
-                            tvMessage.setText("Retrofit Update \n Status ="+response.body().getStatus()+"\n"+ "Message = "+response.body().getMessage()+"\n");
-                        }else{
-                            String detail = "\nid_pembeli ="+response.body().getListDataPembeli().get(0).getIdPembeli()+"\n"+
-                                            "agama = "+response.body().getListDataPembeli().get(0).getNama()+"\n"+
-                                            "alamat = "+response.body().getListDataPembeli().get(0).getAlamat()+"\n"+
-                                            "telpn = "+response.body().getListDataPembeli().get(0).getTelpn()+"\n"+
-                                            "photo_id =  "+response.body().getListDataPembeli().get(0).getPhotoId()+"\n";
-
-                            tvMessage.setText("Retrofit Update \n Status =  "+response.body().getStatus()+"\n"+ "Message = "+response.body().getMessage()+detail);
-                        }
+                    public void onResponse(Call<ResultPembeli> call, Response<ResultPembeli> response) {
+                        finish();
+//                        //Log.d("Update Retrofit ", response.body().getStatus());
+//                        if (response.body().getStatus().equals("failed")){
+//                            tvMessage.setText("Retrofit Update \n Status ="+response.body().getStatus()+"\n"+ "Message = "+response.body().getMessage()+"\n");
+//                        }else{
+//                            String detail = "\nid_pembeli ="+response.body().getListDataPembeli().get(0).getIdPembeli()+"\n"+
+//                                            "agama = "+response.body().getListDataPembeli().get(0).getNama()+"\n"+
+//                                            "alamat = "+response.body().getListDataPembeli().get(0).getAlamat()+"\n"+
+//                                            "telpn = "+response.body().getListDataPembeli().get(0).getTelpn()+"\n"+
+//                                            "photo_id =  "+response.body().getListDataPembeli().get(0).getPhotoId()+"\n";
+//
+//                            tvMessage.setText("Retrofit Update \n Status =  "+response.body().getStatus()+"\n"+ "Message = "+response.body().getMessage()+detail);
+//                        }
                     }
                     @Override
                     public void onFailure(Call<ResultPembeli> call, Throwable t) {
@@ -132,7 +133,6 @@ public class PutDelPembeliActivity extends AppCompatActivity {
         btDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 Call<ResultPembeli> callDelete = mApiInterface.deletePembeli(edtIdPembeli.getText().toString());
                 callDelete.enqueue(new Callback<ResultPembeli>() {
                     @Override
@@ -164,7 +164,9 @@ public class PutDelPembeliActivity extends AppCompatActivity {
                         startActivityForResult(intentChoose, 10);
             }
         });
+
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

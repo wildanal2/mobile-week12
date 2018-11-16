@@ -161,6 +161,7 @@ class Pembeli extends REST_Controller {
 			$this->response(array('status' => "failed", "message"=>"Id Pembeli harus diisi"));
 		}
 		else{
+			
 			$getPhotoPath =$this->db->query("SELECT photo_id FROM pembeli Where id_pembeli='".$data_pembeli['id_pembeli']."'")->result();
 			if(!empty($getPhotoPath)){
 				foreach ($getPhotoPath as $row)
