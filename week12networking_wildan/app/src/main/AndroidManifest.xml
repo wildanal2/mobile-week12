@@ -20,7 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <!--<activity android:name=".GetPembeliActivity"></activity>-->
+        <!-- <activity android:name=".GetPembeliActivity"></activity> -->
+        <activity android:name=".AddDataPembeli" />
+        <activity android:name=".PutDelPembeliActivity"></activity>
     </application>
 
 </manifest>

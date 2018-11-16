@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.networking11.com.week12networking_wildan.Model.Pembeli;
+import com.networking11.com.week12networking_wildan.PutDelPembeliActivity;
 import com.networking11.com.week12networking_wildan.R;
 import com.networking11.com.week12networking_wildan.Rest.ApiClient;
 import com.squareup.picasso.Picasso;
@@ -38,33 +39,30 @@ public class PembeliAdapter extends RecyclerView.Adapter<PembeliAdapter.PembView
         holder.tvNama.setText(listPembeli.get(position).getNama());
         holder.tvAlamat.setText(listPembeli.get(position).getAlamat());
         holder.tvTelpn.setText(listPembeli.get(position).getTelpn());
+
         if (listPembeli.get(position).getPhotoId().length()>0){
-//
-            Picasso.with(holder.itemView.getContext()).load(ApiClient.BASE_URL+listPembeli.get(position).getPhotoId()).into(holder.mPhotoid);
+// Picasso.with(holder.itemView.getContext()).load(ApiClient.BASE_URL+listPembeli.get(position).getPhotoId()).into(holder.mPhotoid);
+            Glide.with(holder.itemView.getContext()).load(ApiClient.BASE_upload+listPembeli.get(position).getPhotoId()).into(holder.mPhotoid);
 
-            Glide.with(holder.itemView.getContext()).load(ApiClient.BASE_URL+listPembeli.get(position
-            ).getPhotoId())
-                    .into(holder.mPhotoid);
         }else{
-//
-            Picasso.with(holder.itemView.getContext()).load(R.drawable.ic_launcher_background).into(holder.mPhotoid)
-            ;
-
+//  Picasso.with(holder.itemView.getContext()).load(R.drawable.ic_launcher_background).into(holder.mPhotoid);
             Glide.with(holder.itemView.getContext()).load(R.drawable.ic_launcher_background).into(holder.mPhotoid);
         }
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(view.getContext(),PutDelPembeliActivity.class);
-//                intent.putExtra("id_pembeli",listPembeli.get(position).getIdPembeli());
-//                intent.putExtra("nama",listPembeli.get(position).getNama());
-//                intent.putExtra("alamat",listPembeli.get(position).getAlamat());
-//                intent.putExtra("telpn",listPembeli.get(position).getTelpn());
-//                intent.putExtra("photo_id",listPembeli.get(position).getPhotoId());
-//                view.getContext().startActivity(intent);
+                Intent intent = new Intent(view.getContext(),PutDelPembeliActivity.class);
+                intent.putExtra("id_pembeli",listPembeli.get(position).getIdPembeli());
+                intent.putExtra("nama",listPembeli.get(position).getNama());
+                intent.putExtra("alamat",listPembeli.get(position).getAlamat());
+                intent.putExtra("telpn",listPembeli.get(position).getTelpn());
+                intent.putExtra("photo_id",listPembeli.get(position).getPhotoId());
+                view.getContext().startActivity(intent);
             }
         });
     }
+
     @Override
     public int getItemCount() {
         return listPembeli.size();

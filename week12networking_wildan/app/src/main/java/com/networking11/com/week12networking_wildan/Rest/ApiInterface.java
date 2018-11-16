@@ -31,28 +31,32 @@ public interface ApiInterface {
 //                                           @Field("tanggal_beli") String tanggalBeli,
 //                                           @Field("total_harga") String totalHarga,
 //                                           @Field("id_tiket") String idTiket);
-//    @FormUrlEncoded
-//    @HTTP(method = "DELETE", path = "pembelian/user", hasBody = true)
-//    Call<PostPutDelPembelian> deletePembelian(@Field("id_pembelian") String idPembelian);
+
 //    /************************************/
     @GET("Pembeli/user")
     Call<ResultPembeli> getPembeli();
 
     @Multipart
     @POST("Pembeli/user")
-    Call<ResultPembeli> postPembeli(@Part MultipartBody.Part file, @Part("id_pembeli")
-                                    RequestBody idPembeli, @Part("nama") RequestBody nama,
-                                    @Part("alamat") RequestBody alamat, @Part("telpn")
-                                            RequestBody telpn, @Part("action") RequestBody action);
+    Call<ResultPembeli> postPembeli(
+                                    @Part MultipartBody.Part file,
+                                    @Part("id_pembeli")RequestBody idPembeli,
+                                    @Part("nama") RequestBody nama,
+                                    @Part("alamat") RequestBody alamat,
+                                    @Part("telpn")  RequestBody telpn,
+                                    @Part("action") RequestBody action);
+
     @Multipart
     @POST("Pembeli/user")
-    Call<ResultPembeli> putPembeli(@Part MultipartBody.Part file, @Part("id_pembeli")
-            RequestBody idPembeli, @Part("nama") RequestBody nama,
-                                   @Part("alamat") RequestBody alamat, @Part("telpn")
-                                           RequestBody telpn, @Part("action") RequestBody action);
-    @Multipart
-    @POST("Pembeli/user")
-    Call<ResultPembeli> deletePembeli(@Part("id_pembeli") RequestBody idPembeli,
-                                      @Part("action") RequestBody action);
+    Call<ResultPembeli> putPembeli(@Part MultipartBody.Part file,
+                                   @Part("id_pembeli") RequestBody idPembeli,
+                                   @Part("nama") RequestBody nama,
+                                   @Part("alamat") RequestBody alamat,
+                                   @Part("telpn") RequestBody telpn,
+                                   @Part("action") RequestBody action);
+
+    @FormUrlEncoded
+    @HTTP(method = "DELETE", path = "Pembeli/user", hasBody = true)
+    Call<ResultPembeli> deletePembeli(@Field("id") String id);
 
 }

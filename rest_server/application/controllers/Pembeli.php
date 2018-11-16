@@ -17,5 +17,107 @@ class Pembeli extends REST_Controller {
 		$this->response(array("status"=>"success","result" => $get_pembeli));
 	}
 
+	function user_post() {
+		$action = $this->post('action');
+		$data_pembeli = array(
+			'id_pembeli' => $this->post('id_pembeli'),
+			'nama' => $this->post('nama'),
+			'alamat' => $this->post('alamat'),
+			'telpn' => $this->post('telpn'),
+			'photo_id' => $this->post('photo_id')
+			);
+
+		if ($action==='post'){
+			$this->insertPembeli($data_pembeli);
+		}else if ($action==='put'){
+			$this->updatePembeli($data_pembeli);
+		}else if ($action==='delete'){
+			$this->deletePembeli($data_pembeli);
+		}else{
+			$this->response(array("status"=>"failed","message" => "action harus diisi"));
+		}
+	}
+
+	function user_delete() {         
+ 		
+ 		$id = $this->delete('id');         
+ 		$this->db->where('id_pembeli', $id);         
+ 		$delete = $this->db->delete('pembeli');  
+
+ 		if ($delete) {             
+ 			$this->response(array('status' => 'success'), 201);         
+ 		} else {             
+ 			$this->response(array('status' => 'fail', 502));         
+ 		}    
+ 	} 
+
+	function insertPembeli($data_pembeli){
+		//function upload image
+		$uploaddir = str_replace("application/", "", APPPATH).'upload/';
+		
+		if(!file_exists($uploaddir) && !is_dir($uploaddir)) {
+			echo mkdir($uploaddir, 0750, true);
+		}
+		if (!empty($_FILES)){
+			$path = $_FILES['photo_id']['name'];
+				$ext = pathinfo($path, PATHINFO_EXTENSION);
+				// $user_img = time() . rand() . '.' . $ext;
+				$user_img = $data_pembeli['id_pembeli']. '.' . "png";
+				$uploadfile = $uploaddir . $user_img;
+				$data_pembeli['photo_id'] = "upload/".$user_img;
+		}else{
+			$data_pembeli['photo_id']="";
+		}
+		//////////////////////////////////////////////////////////////////
+		//////////////////////////////////////////////////////////////////
+		//cek validasi
+
+		if (empty($data_pembeli['id_pembeli'])){
+			$this->response(array('status' => "failed", "message"=>"Id Pembeli harus diisi"));
+		}else if (empty($data_pembeli['nama'])){
+			$this->response(array('status' => "failed", "message"=>"nama harus diisi"));
+		}else if (empty($data_pembeli['alamat'])){
+			$this->response(array('status' => "failed", "message"=>"alamat harus diisi"));
+		}else if (empty($data_pembeli['telpn'])){
+			$this->response(array('status' => "failed", "message"=>"telpn harus diisi"));
+		}
+		else{
+
+			$get_pembeli_baseid = $this->db->query("SELECT * FROM pembeli as p WHERE p.id_pembeli='".$data_pembeli['id_pembeli']."'")->result();
+			
+			if(empty($get_pembeli_baseid)){
+				$insert_image="";
+
+				$insert= $this->db->insert('pembeli',$data_pembeli);
+				if (!empty($_FILES)){
+					if ($_FILES["photo_id"]["name"]) {
+
+						if(move_uploaded_file($_FILES["photo_id"]["tmp_name"],$uploadfile))
+						{
+							$insert_image = "success";
+						} else{
+							$insert_image = "failed";
+						}
+
+					}else{
+						$insert_image = "Image Tidak ada Masukan";
+					}
+
+					$data_pembeli['photo_id'] = base_url()."upload/".$user_img;
+				}else{
+					$data_pembeli['photo_id'] = "";
+				}
+				
+				if ($insert){
+					$this->response(array('status'=>'success','result' => array($data_pembeli),"message"=>$insert_image));
+				}
+
+			}else{
+				$this->response(array('status' => "failed", "message"=>"Id_pembeli sudah ada"));
+			}
+
+		}
+	}
+
 
 }
