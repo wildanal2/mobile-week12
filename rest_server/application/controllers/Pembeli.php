@@ -31,8 +31,6 @@ class Pembeli extends REST_Controller {
 			$this->insertPembeli($data_pembeli);
 		}else if ($action==='put'){
 			$this->updatePembeli($data_pembeli);
-		}else if ($action==='delete'){
-			$this->deletePembeli($data_pembeli);
 		}else{
 			$this->response(array("status"=>"failed","message" => "action harus diisi"));
 		}
@@ -47,14 +45,13 @@ class Pembeli extends REST_Controller {
 			{
 				$path = str_replace("application/", "", APPPATH).$row->photo_id;
 			}
-				//delete image
+			
+			//delete image
 			unlink($path);
-			$this->db->query("Delete From pembeli Where id_pembeli='".$data_pembeli['id_pembeli']."'");
 
-			$this->db->where('id_pembeli', $id);         
-		 	
+			//delete database
+			$this->db->where('id_pembeli', $id);          	
 		 	$delete = $this->db->delete('pembeli');  
-
 		 		if ($delete) {             
 		 			$this->response(array('status' => 'success'), 201);         
 		 		} else {             

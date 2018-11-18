@@ -15,24 +15,6 @@ import retrofit2.http.PUT;
 import retrofit2.http.Part;
 
 public interface ApiInterface {
-//    @GET("pembelian/user")
-//    Call<GetPembelian> getPembelian();
-//    @FormUrlEncoded
-//    @POST("pembelian/user")
-//    Call<PostPutDelPembelian> postPembelian(@Field("id_pembelian") String idPembelian,
-//                                            @Field("id_pembeli") String idPembeli,
-//                                            @Field("tanggal_beli") String tanggalBeli,
-//                                            @Field("total_harga") String totalHarga,
-//                                            @Field("id_tiket") String idTiket);
-//    @FormUrlEncoded
-//    @PUT("pembelian/user")
-//    Call<PostPutDelPembelian> putPembelian(@Field("id_pembelian") String idPembelian,
-//                                           @Field("id_pembeli") String idPembeli,
-//                                           @Field("tanggal_beli") String tanggalBeli,
-//                                           @Field("total_harga") String totalHarga,
-//                                           @Field("id_tiket") String idTiket);
-
-//    /************************************/
     @GET("Pembeli/user")
     Call<ResultPembeli> getPembeli();
 
@@ -58,5 +40,4 @@ public interface ApiInterface {
     @FormUrlEncoded
     @HTTP(method = "DELETE", path = "Pembeli/user", hasBody = true)
     Call<ResultPembeli> deletePembeli(@Field("id") String id);
-
 }

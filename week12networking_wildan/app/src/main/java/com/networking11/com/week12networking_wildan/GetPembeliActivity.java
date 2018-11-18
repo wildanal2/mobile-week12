@@ -84,8 +84,8 @@ public class GetPembeliActivity extends AppCompatActivity {
         Intent mIntent;
         switch (item.getItemId()) {
             case R.id.menuGetPembelian:
-                mIntent = new Intent(this, MainActivity.class);
-                startActivity(mIntent);
+//                mIntent = new Intent(this, MainActivity.class);
+//                startActivity(mIntent);
                 return true;
             case R.id.menuGetPembeli:
                 mIntent = new Intent(this, GetPembeliActivity.class);
@@ -101,6 +101,4 @@ public class GetPembeliActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 }

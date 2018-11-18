@@ -46,7 +46,6 @@ public class AddDataPembeli extends AppCompatActivity {
         eventButton();
     }
 
-
     public void init(){
         mContext = getApplicationContext();
         mImageView = (ImageView) findViewById(R.id.imgAddPhotoId);
@@ -139,14 +138,12 @@ public class AddDataPembeli extends AppCompatActivity {
 
     }
 
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == 10) {
             if (data == null) {
-                Toast.makeText(mContext, "Gambar Gagal Di load",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Gambar Gagal Di load",Toast.LENGTH_LONG).show();
                 return;
             }
             Uri selectedImage = data.getData();
@@ -157,6 +154,10 @@ public class AddDataPembeli extends AppCompatActivity {
                 cursor.moveToFirst();
                 int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
                 imagePath = cursor.getString(columnIndex);
+                Glide.with(getApplicationContext()).load(new File(imagePath)).into(mImageView);
+                cursor.close();
+            }else {
+                Toast.makeText(mContext, "Gambar Gagal Di load",Toast.LENGTH_LONG).show();
             }
         }
     }

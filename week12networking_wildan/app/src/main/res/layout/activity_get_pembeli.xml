@@ -18,6 +18,7 @@
         android:layout_below="@+id/btGet"
         android:layout_above="@+id/btAddData">
     </android.support.v7.widget.RecyclerView>
+
     <Button
         android:id="@+id/btAddData"
         android:layout_width="match_parent"

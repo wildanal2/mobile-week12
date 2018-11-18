@@ -137,11 +137,11 @@ public class PutDelPembeliActivity extends AppCompatActivity {
                 callDelete.enqueue(new Callback<ResultPembeli>() {
                     @Override
                     public void onResponse(Call<ResultPembeli> call, Response<ResultPembeli> response) {
-                        tvMessage.setText("Retrofit Delete \n Status = "+response.body().getStatus());
+                        tvMessage.setText("Retrofit Delete \n Status = "+response.body().getStatus().toString());
                     }
                     @Override
                     public void onFailure(Call<ResultPembeli> call, Throwable t) {
-                        tvMessage.setText("Retrofit Delete \n Status = "+t.getMessage());
+                        tvMessage.setText("Retrofit Delete \n Status = "+t.getMessage().toString());
                     }
                 });
             }
@@ -172,8 +172,7 @@ public class PutDelPembeliActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode ==10) {
             if (data == null) {
-                Toast.makeText(mContext, "Gambar Gagal Di load",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(mContext, "Gambar Gagal Di load",Toast.LENGTH_LONG).show();
                 return;
             }
             Uri selectedImage = data.getData();
